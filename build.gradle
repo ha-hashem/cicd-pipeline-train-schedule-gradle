@@ -1,0 +1,29 @@
+plugins {
+  id "com.github.node-gradle.node" version "2.2.0"
+}
+
+node {
+  npmVersion = "6.9.0"
+  download = true
+}
+
+task zip(type: Zip) {
+  from ('.') {
+    include "*" 
+    include "bin/**" 
+    include "data/**" 
+    include "node_modules/**" 
+    include "public/**" 
+    include "routes/**" 
+    include "views/**"
+  } 
+  destinationDir(file("dist"))
+  baseName "trainSchedule"
+} 
+
+task build
+
+build.dependsOn zip
+zip.dependsOn npm_build
+npm_build.dependsOn npm_test
+npm_test.dependsOn npmInstall

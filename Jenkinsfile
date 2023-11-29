@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+        DOCKER_IMAGE_NAME = "hahasem/train-schedule"
+    }
     stages {
         stage('Build') {
             steps {
@@ -14,9 +17,9 @@ pipeline {
             }
             steps {
                 script {
-                    app = docker.build("hahashem/train-schedule")
+                    app = docker.build(DOCKER_IMAGE_NAME)
                     app.inside {
-                        sh 'echo $(curl localhost:8080)'
+                        sh 'echo Hello, World!'
                     }
                 }
             }
